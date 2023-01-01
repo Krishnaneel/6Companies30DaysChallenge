@@ -1,0 +1,36 @@
+[Problem Link](https://leetcode.com/problems/largest-divisible-subset/description/)
+
+class Solution {
+public:
+    vector<int> largestDivisibleSubset(vector<int>& nums) {
+        
+        sort(nums.begin(),nums.end());
+        int n=nums.size();
+        vector<int> h(n,1); // to store the length of the longest subarray till i;
+        vector<int> store(n,0); // to store the index of element included in largest subarray for backtracking while printing the element
+        int ind=0,mL=1;
+        
+        for(int i=1;i<n;i++){
+            store[i]=i;
+            for(int j=0;j<i;j++){
+                if(nums[i]%nums[j]==0 && h[i]<h[j]+1){
+                    h[i]=h[j]+1;
+                    store[i]=j;
+                    if(mL<h[i]){
+                        mL=h[i];
+                        ind=i;
+                    } 
+                }
+            }
+        }
+        
+        int k=ind;
+        vector<int> ans(mL,0);
+        
+        for(int i=mL-1;i>=0;i--){
+            ans[i]=nums[k];
+            k=store[k];
+        }
+        return ans;
+    }
+};
