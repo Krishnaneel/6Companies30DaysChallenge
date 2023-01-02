@@ -1,0 +1,27 @@
+[Problem Link](https://leetcode.com/problems/rotate-function/)
+
+typedef long long int ll;
+class Solution {
+public:
+    int maxRotateFunction(vector<int>& nums) {
+        ll curr=1;
+        ll ans=-1e9;
+        int n=nums.size();
+
+        for(int i=0;i<n;i++)
+            curr=curr+(i*nums[i]);
+        ans=curr;
+        n--;
+        int l=n+1;
+        cout<<n;
+        int i=1;
+        ll sum=accumulate(nums.begin(),nums.end(),0);
+        while(n--){
+            curr=curr+sum-(l*nums[l-i]);
+            ans=max(curr,ans);
+            i++;
+        }
+        return ans-1;
+
+    }
+};
