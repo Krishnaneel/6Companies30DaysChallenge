@@ -1,0 +1,37 @@
+[Problem Link](https://leetcode.com/problems/bulls-and-cows/)
+
+class Solution {
+public:
+    string getHint(string secret, string guess) {
+        map<char,int>mp;
+        int n=secret.length();
+        for(int i=0;i<n;i++)
+            mp[secret[i]]++;
+        vector<int>bull(n,0);
+        
+        int c=0,b=0;
+        for(int i=0;i<n;i++){
+            if(secret[i]==guess[i]){
+                b++;
+                mp[guess[i]]--;
+                if(mp[guess[i]]==0)
+                mp.erase(guess[i]);
+                bull[i]=1;
+            }
+        }
+
+
+        for(int i=0;i<n;i++){
+            if(mp.find(guess[i])!=mp.end() && bull[i]==0){
+                    c++;
+                    mp[guess[i]]--;
+                    if(mp[guess[i]]==0)
+                    mp.erase(guess[i]);
+            }
+        }
+
+        string ans=to_string(b)+"A"+to_string(c)+"B";
+        return ans;
+        
+    }
+};
