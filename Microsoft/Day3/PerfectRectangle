@@ -1,0 +1,34 @@
+[ProblemLinke:](https://leetcode.com/problems/perfect-rectangle/)
+
+class Solution {
+public:
+    bool isRectangleCover(vector<vector<int>>& rect) {
+        map<pair<int,int>,int>mp;
+        int x1,x2,y1,y2,a1,a2,b1,b2;
+        for(int i=0;i<rect.size();i++){
+            x1=rect[i][0];
+            a1=rect[i][2];
+            y1=rect[i][1];
+            b1=rect[i][3];
+            x2=a1;
+            a2=x1;
+            y2=y1;
+            b2=b1;
+            mp[{x1,y1}]++;
+            mp[{a1,b1}]++;
+            mp[{x2,y2}]--;
+            mp[{a2,b2}]--;
+        }
+        int corners=0;
+        for(auto it:mp){
+            if(it.second){
+                if(abs(it.second)!=1)
+                return false;
+                corners++;
+            }
+        }
+        //cout<<outerPoints;
+        if(corners==4) return true;
+        return false;
+    }
+};
