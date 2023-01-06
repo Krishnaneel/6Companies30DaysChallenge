@@ -1,0 +1,33 @@
+(Problem Link)[https://leetcode.com/problems/max-points-on-a-line/]
+
+
+class Solution {
+public:
+
+    int findMax(map<double,int>& mp){
+        int ans=-1;
+        for(auto it:mp){
+            ans=max(ans,it.second);
+        }
+        return ans;
+    }
+
+    int maxPoints(vector<vector<int>>& points) {
+        int n=points.size();
+        int ans=0;
+        for(int i=0;i<n;i++){
+            map<double,int>mp;
+            for(int j=0;j<n;j++){
+                if(i==j) continue;
+                int n=points[i][0]-points[j][0];
+                int d=points[i][1]-points[j][1];
+                double s;
+                if(d==0) s=(1.0*INT_MAX);
+                else s=(1.0*n)/d;
+                mp[s]++;
+            }
+            ans=max(ans,findMax(mp));
+        }
+        return ans+1;
+    }
+};
