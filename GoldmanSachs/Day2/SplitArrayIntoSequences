@@ -1,6 +1,5 @@
-[Problem Link](https://leetcode.com/problems/split-array-into-consecutive-subsequences/)
-
-
+class Solution {
+public:
     bool isPossible(vector<int>& A) {
         unordered_map<int, int> av, va;
         for (int i: A) {
@@ -22,3 +21,4 @@
         }
         return true;
     }
+};
