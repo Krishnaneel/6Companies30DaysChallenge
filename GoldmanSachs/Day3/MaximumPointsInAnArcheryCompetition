@@ -1,0 +1,39 @@
+Problem Link:  https://leetcode.com/problems/maximum-points-in-an-archery-competition/
+
+
+class Solution {
+public:
+    int maxPoints=0;
+    vector<int>final;
+    void f(int i,int n,vector<int>&arr,vector<int>& ans,int points,vector<int>& final,int& maxPoints){
+        if(n<0) return; //if arrow becomes negative, then not exploring any possibility
+        if(i==-1){  //when 0th set is over
+            if(maxPoints<points){ //checking with the overall maxPoints
+                maxPoints=points; //storing in the vector
+                final=ans;
+            }
+            return;
+        }
+        if(i==0){ //if it is the 0th point,then shooting all the arrows here
+            if(n>=0){
+                ans[0]=n;
+                f(i-1,0,arr,ans,points,final,maxPoints);
+                return;
+            }
+        }
+        if(n-arr[i]+1>=0){  //winning 'i'points by shooting arr[i]+1 arrows
+            ans[i]=arr[i]+1;
+            f(i-1,n-arr[i]-1,arr,ans,points+i,final,maxPoints);
+            ans[i]=0;  //backtrack
+        }
+        f(i-1,n,arr,ans,points,final,maxPoints);  //not winning 'i'points
+    }
+
+    vector<int> maximumBobPoints(int n, vector<int>& arr) {
+        vector<int>ans(12,0);//to store the temporary ans
+        vector<int>final;
+        int maxPoints=0; 
+        f(11,n,arr,ans,0,final,maxPoints);
+        return final; //final ans
+    }
+};
