@@ -1,0 +1,32 @@
+Problem Link : https://leetcode.com/problems/count-nice-pairs-in-an-array/
+
+
+class Solution {
+public:
+
+    int rev(int x){
+        int r=0,d;
+        while(x){
+            d=x%10;
+            r=r*10+d;
+            x=x/10;
+        }
+        return r;
+    }
+
+    int countNicePairs(vector<int>& nums) {
+        map<int,int>mp;
+        int n=nums.size();
+        int ans=0;
+        int mod=1e9+7;
+        for(int i=0;i<n;i++){
+            int r=rev(nums[i]);
+            cout<<nums[i]<<" "<<r<<endl;
+            if(mp[nums[i]-r]>0){
+                ans=(ans%mod+mp[nums[i]-r]%mod)%mod;
+            }
+            mp[nums[i]-r]=(mp[nums[i]-r]%mod+1)%mod;
+        }
+        return ans;
+    }
+};
