@@ -1,0 +1,24 @@
+Problem Link: https://leetcode.com/problems/increasing-triplet-subsequence/
+
+
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& nums) {
+        int n=nums.size();
+        
+        int a=INT_MAX;//first number;
+        int b=INT_MAX;//first number;
+
+        for(int i=0;i<n;i++){
+            if(nums[i]<=a){
+                a=nums[i];
+            }
+            else if(nums[i]<=b){
+                b=nums[i];
+            }
+            else return true;
+        }
+        return false;
+
+    }
+};
