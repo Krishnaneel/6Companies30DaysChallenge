@@ -1,0 +1,36 @@
+Problem Link: https://leetcode.com/problems/k-th-smallest-in-lexicographical-order/
+
+
+class Solution {
+public:
+
+    int countNode(long n,long curr){
+        int total=0;
+        long next=curr+1;
+        while(curr<=n){
+            total+=min(n-curr+1,next-curr);
+            curr=curr*10;
+            next=next*10;
+        }
+        return total;
+    }
+
+    int findKthNumber(int n, int k) {
+        long long curr=1;
+        k--;
+        
+        while(k>0){
+            //cout<<curr;
+            int count=countNode(n,curr);
+            //cout<<" "<<count<<endl;
+            if(count<=k){
+                curr++;
+                k=k-count;
+            }else{
+                curr=curr*10;
+                k--;
+            }
+        }
+        return curr;
+    }
+};
