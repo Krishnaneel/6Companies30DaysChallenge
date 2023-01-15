@@ -1,0 +1,68 @@
+Problem Link:https://leetcode.com/problems/dungeon-game/
+
+
+
+public:
+    
+    // here n= number of rows and m=number of column
+    
+    
+ bool check(int row, int col, int n, int m)  // checking if the index is out of bound or not
+{
+	if (row < 0 || col < 0 || row >= n || col >= m)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+int solve(int row, int col, vector<vector<int>>& dungeon, vector<vector<int>>&dp)
+{
+	int n = dungeon.size();
+	int m = dungeon[0].size();
+
+	if (row == n - 1 && col == m - 1) // base condition i.e if the  knight reaches the princess then return the value as stated below
+	{
+		return dp[row][col] = dungeon[row][col];
+	}
+// if the subproblem is already calculated then return the ans stored of that particular subproblem
+	if (dp[row][col] != -1e6)
+	{
+		return dp[row][col];
+	}
+	// calculating the value of particular subproblem
+	int ans = -1e6;
+
+	if (check(row, col + 1, n, m))
+	{
+		ans = max(ans, min(dungeon[row][col], solve(row, col + 1, dungeon, dp) + dungeon[row][col]));
+	}
+	if (check(row + 1, col, n, m))
+	{
+		ans = max(ans, min(dungeon[row][col], solve(row + 1, col, dungeon, dp) + dungeon[row][col]));
+	}
+// storing the ans of the subproblem (row,col) in the grid
+	return dp[row][col] = ans;
+
+
+}
+
+int calculateMinimumHP(vector<vector<int>>& dungeon) {
+	int n = dungeon.size();
+	int m = dungeon[0].size();
+	vector<vector<int>>dp(n, vector<int>(m, -1e6));
+
+	int ans = solve(0, 0, dungeon, dp);
+	if (ans > 0)
+	{
+		return 1;
+
+	}
+
+
+
+	return 1 - ans;
+
+}
+};
