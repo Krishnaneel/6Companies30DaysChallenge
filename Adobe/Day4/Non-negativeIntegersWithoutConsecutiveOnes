@@ -1,0 +1,41 @@
+Problem Link: https://leetcode.com/problems/non-negative-integers-without-consecutive-ones/
+
+
+// 600. Non-negative Integers without Consecutive Ones
+
+class Solution {
+public:
+    
+    string num;
+    int dp[34][2][2];  // 10^9 == 2^30
+    string binary(int n){
+        string bin;
+        while(n){
+            int r=n%2;
+            n=n/2;
+            bin+=to_string(r);
+        }
+        reverse(bin.begin(),bin.end());
+        return bin;
+    }
+    
+    int solve(int pos, bool lim, int prev){
+        if(pos==num.size()) return 1;
+        if(dp[pos][lim][prev]!=-1) return dp[pos][lim][prev];
+        int cnt=0,limit=1;
+        if(lim) limit=num[pos]-'0';
+        for(int i=0; i<=limit; i++){
+            if(prev==1 && i==1) continue;
+            if(i==limit && lim) cnt+=solve(pos+1,true,i);
+            else cnt+=solve(pos+1,false,i);
+        }
+        dp[pos][lim][prev] = cnt;
+        return cnt;
+    }
+    
+    int findIntegers(int n) {
+        num = binary(n);
+        memset(dp,-1,sizeof dp);
+        return solve(0,true,false);
+    }
+};
