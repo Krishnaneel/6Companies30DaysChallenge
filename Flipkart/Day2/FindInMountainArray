@@ -1,0 +1,67 @@
+Problem Link: https://leetcode.com/problems/find-in-mountain-array/
+
+
+/**
+ * // This is the MountainArray's API interface.
+ * // You should not implement it, or speculate about its implementation
+ * class MountainArray {
+ *   public:
+ *     int get(int index);
+ *     int length();
+ * };
+ */
+
+class Solution {
+public:
+
+    int findPeak(MountainArray &mountainArr){
+        int s=0,e=mountainArr.length()-1;
+        int peakEle;
+        while(s<e){ // Finding Peak Element
+            int mid=s+(e-s)/2;
+            if(mountainArr.get(mid+1)>mountainArr.get(mid)){
+                s=mid+1;
+                peakEle=mid+1;
+            }
+            else
+                e=mid;
+        }
+        return peakEle;
+    }
+
+    int findIBs(int i,int j,int target,MountainArray &mountainArr){
+        while(i<=j){
+            int mid=i+(j-i)/2;
+            if(mountainArr.get(mid)==target)
+            return mid;
+            else if(mountainArr.get(mid)>target){
+                j=mid-1;
+            }
+            else i=mid+1;
+        }
+        return -1;
+    }
+
+    int findDBs(int i,int j,int target,MountainArray &mountainArr){
+        while(i<=j){
+            int mid=i+(j-i)/2;
+            if(mountainArr.get(mid)==target)
+            return mid;
+            else if(mountainArr.get(mid)>target){
+                i=mid+1;
+            }
+            else j=mid-1;
+        }
+        return -1;
+    }
+
+    int findInMountainArray(int target, MountainArray &mountainArr) {
+        int p=findPeak(mountainArr);
+        //if(mountainArr.get(p)==target) return p;
+        int f=-1,l=-1;
+        f=findIBs(0,p,target,mountainArr);
+        if(f!=-1) return f;
+        l=findDBs(p+1,mountainArr.length()-1,target,mountainArr);
+        return l;
+    }
+};
