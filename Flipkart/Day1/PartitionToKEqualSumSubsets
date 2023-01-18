@@ -1,0 +1,41 @@
+Problem Link: https://leetcode.com/problems/partition-to-k-equal-sum-subsets/
+
+
+class Solution {
+public:
+
+    bool solve(int i,vector<int>& nums,vector<int>& picked,int sum,int& tar,int k){
+        if(k==1) return true;
+
+        if(i>=nums.size()) //This line is important to avoid tle
+           return false;
+
+        if(sum==tar){
+            return solve(0,nums,picked,0,tar,k-1);
+        }
+
+        bool pick=false,not_pick=false;
+        if(picked[i]==0 && nums[i]+sum<=tar){
+            picked[i]=1;
+            pick=solve(i+1,nums,picked,sum+nums[i],tar,k);
+            picked[i]=0;
+        }
+        not_pick=solve(i+1,nums,picked,sum,tar,k);
+
+        return pick|not_pick;
+    }
+
+    bool canPartitionKSubsets(vector<int>& nums, int k) {
+
+        int totalsum=accumulate(nums.begin(),nums.end(),0);
+        if(totalsum%k!=0) return false;
+        int tar=totalsum/k;
+
+        int n=nums.size();
+        vector<int>done(n,0);
+
+        sort(begin(nums),end(nums),greater<int>());
+       
+        return solve(0,nums,done,0,tar,k);
+    }
+};
