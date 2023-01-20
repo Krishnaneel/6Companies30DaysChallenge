@@ -1,0 +1,28 @@
+Problem Link: https://leetcode.com/problems/new-21-game/
+
+
+class Solution{
+
+double solver(int n, int k, int mp,int i, vector<double>&dp)
+    {
+        if(i>=k)
+            return i<=n?1:0;
+        
+        if(dp[i]!=-1)
+            return dp[i];
+        
+        double ans=0;
+        for(int j=1;j<=mp;j++)
+        {
+            ans+=solver(n,k,mp,i+j,dp);
+        }
+        
+        return dp[i]=(double)ans/mp;
+    }
+    double new21Game(int n, int k, int mp) {
+        
+        vector<double>dp(k+mp,-1.00);
+        
+        return solver(n,k,mp,0,dp);
+    }
+ };
