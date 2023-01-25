@@ -1,0 +1,28 @@
+Problem Link: https://leetcode.com/problems/restore-ip-addresses/
+
+
+class Solution {
+public:
+
+    void solve(int i,int par,string temp,string& s,int n,vector<string>& ans){
+        if(par==4 && i==n){
+            ans.push_back(temp.substr(0,temp.length()-1));
+            return;
+        }
+        if(par>4) return;
+
+        for(int j=i;j<min(i+3,n);j++){
+            if((i==j || s[i]!='0') && stoi(s.substr(i,j-i+1))<=255 )
+            solve(j+1,par+1,temp+s.substr(i,j-i+1)+".",s,n,ans);
+        }
+    }
+
+    vector<string> restoreIpAddresses(string s) {
+        string temp="";
+        vector<string>ans;
+        int n=s.length();
+        if(n>12) return ans;
+        solve(0,0,temp,s,n,ans);
+        return ans;
+    }
+};
