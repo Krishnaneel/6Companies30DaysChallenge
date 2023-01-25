@@ -1,0 +1,38 @@
+Problem Link: https://leetcode.com/problems/swim-in-rising-water/
+
+
+class Solution {
+public:
+
+    bool valid(int i,int j,int n){
+        if(i>=0 && j>=0 && i<n && j<n)
+            return true;
+        return false;
+    }
+
+    int swimInWater(vector<vector<int>>& grid) {
+        priority_queue< pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>,greater<pair<int,pair<int,int>>>>pq;
+        pq.push({grid[0][0],{0,0}});
+        int n=grid.size();
+        vector<vector<int>>vis(n,vector<int>(n,1e5));
+        vis[0][0]=0;
+        int delrow[4]={0,0,-1,1};
+        int delcol[4]={-1,1,0,0};
+
+        while(!pq.empty()){
+            auto t=pq.top(); pq.pop();
+            int ans=t.first;
+            int row=t.second.first;
+            int col=t.second.second;
+            for(int k=0;k<4;k++){
+                int nrow=row+delrow[k];
+                int ncol=col+delcol[k];
+                if(valid(nrow,ncol,n) && vis[nrow][ncol]>max(ans,grid[nrow][ncol])){
+                    vis[nrow][ncol]=max(ans,grid[nrow][ncol]);
+                    pq.push({vis[nrow][ncol],{nrow,ncol}});
+                }
+            }
+        }
+        return vis[n-1][n-1];
+    }
+};
