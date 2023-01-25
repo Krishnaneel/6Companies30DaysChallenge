@@ -1,0 +1,16 @@
+Problem Link: https://leetcode.com/problems/maximum-number-of-coins-you-can-get/
+
+class Solution {
+public:
+    int maxCoins(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        int i=nums.size()-2,n=nums.size()/3;
+        int ans=0;
+        while(n){
+            ans+=nums[i];
+            i=i-2;
+            n--;
+        }
+        return ans;
+    }
+};
