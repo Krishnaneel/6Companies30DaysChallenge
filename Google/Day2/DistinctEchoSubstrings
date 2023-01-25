@@ -1,0 +1,24 @@
+Problem Link: https://leetcode.com/problems/distinct-echo-substrings/
+
+
+
+class Solution {
+public:
+    int distinctEchoSubstrings(string s) {
+    if(s.length()==0) return 0;
+    set<string>st;
+	for (int len = 1; len <= s.length() / 2; len++) {
+		for (int l = 0, r = len, count = 0; l < s.length() - len; l++, r++) {
+			if (s[l] == s[r]) count++;
+			else count = 0;
+
+			if (count == len) {
+				st.insert(s.substr(l - len + 1, len));
+				count--;
+			}
+		}
+	}
+
+	return st.size();
+    }
+};
