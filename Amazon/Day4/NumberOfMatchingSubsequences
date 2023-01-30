@@ -1,0 +1,26 @@
+class Solution {
+public:
+
+    bool solve(string s,string w){
+        int i=0,j=0;
+        if(s.length()<w.length()) return false;
+        while(i<s.length()){
+            if( s[i]==w[j]){
+                i++;j++;
+            }else i++;
+            if(j==w.length()) return true;
+        }
+        return j==w.length();
+    }
+
+    int numMatchingSubseq(string s, vector<string>& words) {
+        int ans=0;
+        map<string,int>mp;
+        for(auto w:words) mp[w]++;
+        for(auto it:mp){
+            if(solve(s,it.first))
+            ans=ans+it.second;
+        }
+        return ans;
+    }
+};
