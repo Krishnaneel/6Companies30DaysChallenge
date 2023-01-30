@@ -1,0 +1,22 @@
+typedef long long int ll;
+class Solution {
+public:
+    int solve(int i,int j,vector<vector<int>>& grid){
+        int sum=grid[i][j]+grid[i][j+1]+grid[i][j+2]+grid[i+1][j+1]+grid[i+2][j]+grid[i+2][j+1]+grid[i+2][j+2];
+        return sum;
+    }
+
+    int maxSum(vector<vector<int>>& grid) {
+        int n=grid.size()-3+1;
+        int m=grid[0].size()-3+1;
+        
+        int ans=0;
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=m;j++){
+                int temp=solve(i-1,j-1,grid);
+                if(ans<temp) ans=temp;
+            }
+        }
+        return ans;
+    }
+};
