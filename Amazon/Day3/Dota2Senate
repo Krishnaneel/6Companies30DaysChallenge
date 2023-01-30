@@ -1,0 +1,20 @@
+class Solution {
+public:
+    string predictPartyVictory(string senate) {
+        queue<int>rq;
+        queue<int>dq;
+        for(int i=0;i<senate.length();i++){
+            if(senate[i]=='R')
+                rq.push(i);
+            else dq.push(i);
+        }
+        while(rq.size() && dq.size()){
+            int r=rq.front();rq.pop();
+            int d=dq.front();dq.pop();
+            if(r<d) rq.push(r+senate.length());
+            else dq.push(d+senate.length());
+        }
+        if(rq.size()) return "Radiant";
+        else return "Dire";
+    }
+};
